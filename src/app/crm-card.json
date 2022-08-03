@@ -1,7 +1,7 @@
 {
   "type": "crm-card",
   "data": {
-    "title": "App CRM Card",
+    "title": "Example CRM Card",
     "fetch": {
       "targetFunction": "crm-card",
       "objectTypes": [

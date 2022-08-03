@@ -5,53 +5,57 @@ exports.main = async (context = {}, sendResponse) => {
 
   // Make a all to ZenQuotes public API and fetch data
 
-  try {
-    const { quotesData } = await axios.get("https://zenquotes.io/api/random");
-    const quoteSections = [
-      {
-        "type": "tile",
-        "body": [
-          {
-            "type": "text",
-            "format": "markdown",
-            "text": "**Hello " + firstname + ", Here's your quote for the day**!"
-          },
-          {
-            "type": "text",
-            "format": "markdown",
-            "text": "**Quote**:" + quotesData[0].q
-          },
-          {
-            "type": "text",
-            "format": "markdown",
-            "text": "**Author**:" + quotesData[0].a
+  const getExternalData = async () => {
+    try {
+      const { data } = await axios.get("https://zenquotes.io/api/random");
+      const quoteSections = [
+        {
+          "type": "tile",
+          "body": [
+            {
+              "type": "text",
+              "format": "markdown",
+              "text": "**Hello " + firstname + ", Here's your quote for the day**!"
+            },
+            {
+              "type": "text",
+              "format": "markdown",
+              "text": "**Quote**:" + data[0].q
+            },
+            {
+              "type": "text",
+              "format": "markdown",
+              "text": "**Author**:" + data[0].a
+            }
+          ]
+        },
+        {
+          "type": "button",
+          "text": "Get new quote",
+          "onClick": {
+            "type": "SERVERLESS_ACTION_HOOK",
+            "serverlessFunction": "crm-card"
           }
-        ]
-      },
-      {
-        "type": "button",
-        "text": "Get new quote",
-        "onClick": {
-          "type": "SERVERLESS_ACTION_HOOK",
-          "serverlessFunction": "crm-card"
         }
-      }
-    ];
-    return quoteSections;
-  } catch (error) {
-    const quoteSections = [
-      {
-        "type": "alert",
-        "variant": "error"
-        "title": "Error fetching new quote",
-        "body": {
-          "type": "text",
-          "text": error.message
+      ];
+      return quoteSections;
+    } catch (error) {
+      const quoteSections = [
+        {
+          "type": "alert",
+          "variant": "error"
+          "title": "Error fetching new quote",
+          "body": {
+            "type": "text",
+            "text": error.message
+          }
         }
-      }
-    ];
-    return quoteSections;
-  }
+      ];
+      return quoteSections;
+    }
+  };
+  
+  const quotes = await getExternalData();
   
   const introMessage = [
     {
@@ -64,16 +68,10 @@ exports.main = async (context = {}, sendResponse) => {
     }
   ];
 
-  const sections = [...introMessage, ...quoteSections];
+  const sections = [...introMessage, ...quotes];
 
   sendResponse({
     sections,
   });
 };
-
   
-
-  
-    
-
-

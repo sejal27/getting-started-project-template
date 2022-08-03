@@ -1,3 +1,6 @@
+// For external API calls
+const axios = require('axios');
+
 exports.main = async (context = {}, sendResponse) => {
   
   // Store contact firstname, configured as propertiesToSend in crm-card.json

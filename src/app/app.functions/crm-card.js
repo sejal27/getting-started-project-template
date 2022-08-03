@@ -1,22 +1,13 @@
 exports.main = async (context = {}, sendResponse) => {
   
   // Store contact firstname, configured as propertiesToSend in crm-card.json
-  const { firstname } = context.propertiesToSend
+  const { firstname } = context.propertiesToSend;
 
   // Make a all to ZenQuotes public API and fetch data
 
   try {
     const { quotesData } = await axios.get("https://zenquotes.io/api/random");
-
-    const sections = [
-      {
-        type: "text",
-        text: "An example of a CRM card extension that displays data from Hubspot, uses ZenQuotes public API to display daily quote, and demonstrates custom actions using serverless functions.",
-      },
-      {
-        type: "divider",
-        distance: "small",
-      },
+    const quoteSections = [
       {
         "type": "tile",
         "body": [
@@ -46,11 +37,43 @@ exports.main = async (context = {}, sendResponse) => {
         }
       }
     ];
+    return quoteSections;
   } catch (error) {
-    const { quotesError } = error.message;
+    const quoteSections = [
+      {
+        "type": "alert",
+        "variant": "error"
+        "title": "Error fetching new quote",
+        "body": {
+          "type": "text",
+          "text": error.message
+        }
+      }
+    ];
+    return quoteSections;
   }
+  
+  const introMessage = [
+    {
+      type: "text",
+      text: "An example of a CRM card extension that displays data from Hubspot, uses ZenQuotes public API to display daily quote, and demonstrates custom actions using serverless functions.",
+    },
+    {
+      type: "divider",
+      distance: "small",
+    }
+  ];
+
+  const sections = [...introMessage, ...quoteSections];
 
   sendResponse({
     sections,
   });
 };
+
+  
+
+  
+    
+
+

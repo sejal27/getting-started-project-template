@@ -1,8 +1,7 @@
 exports.main = async (context = {}, sendResponse) => {
-  // Instantiating HubSpot node API client
-  const hubspotClient = new hubspot.Client({
-    accessToken: context.secrets.PRIVATE_APP_ACCESS_TOKEN,
-  });
+  
+  // Store contact firstname, configured as propertiesToSend in crm-card.json
+  const { firstname } = context.propertiesToSend
 
   // Make a all to ZenQuotes public API and fetch data
 

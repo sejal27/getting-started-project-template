@@ -62,7 +62,7 @@ exports.main = async (context = {}, sendResponse) => {
       results: [staticCard, internalCard, externalCard],
       primaryAction: {
         type: 'SERVERLESS_ACTION_HOOK',
-        serverlessFunction: 'crm-card',
+        serverlessFunction: 'v1-crm-card',
         label: 'Get Inspired',
       },
     });

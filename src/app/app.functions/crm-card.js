@@ -9,7 +9,8 @@ exports.main = async (context = {}, sendResponse) => {
   const introMessage = [
     {
       type: "text",
-      text: "An example of a CRM card extension that displays data from Hubspot, uses ZenQuotes public API to display daily quote, and demonstrates custom actions using serverless functions.",
+      format: "markdown",
+      text: "_An example of a CRM card extension that displays data from Hubspot, uses ZenQuotes public API to display daily quote, and demonstrates custom actions using serverless functions._",
     }
   ];
 
@@ -24,7 +25,7 @@ exports.main = async (context = {}, sendResponse) => {
           {
             "type": "text",
             "format": "markdown",
-            "text": "**Hello " + firstname + ", Here's your quote for the day**!"
+            "text": "**Hello " + firstname + ", here's your quote for the day**!"
           },
           {
             "type": "text",

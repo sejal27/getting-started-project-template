@@ -56,14 +56,15 @@ exports.main = async (context = {}, sendResponse) => {
     sections = [
       {
         "type": "alert",
-        "variant": "error"
+        "variant": "danger"
         "title": "Error fetching new quote",
         "body": {
           "type": "text",
-          "text": error.message
+          "text": `${error.message}`
         }
       }
     ];
+    console.log(error);
   }
 
   sendResponse({

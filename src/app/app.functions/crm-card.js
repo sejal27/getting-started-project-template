@@ -73,40 +73,58 @@ exports.main = async (context = {}, sendResponse) => {
 
   // const sections = [...introMessage, ...quotes];
 
-  const { data } = await axios.get("https://zenquotes.io/api/random");
 
-  const sections = [
-    {
-      "type": "tile",
-      "body": [
-        {
-          "type": "text",
-          "format": "markdown",
-          "text": "**Hello " + firstname + ", Here's your quote for the day**!"
-        },
-        {
-          "type": "text",
-          "format": "markdown",
-          "text": "**Quote**:" + data[0].q
-        },
-        {
-          "type": "text",
-          "format": "markdown",
-          "text": "**Author**:" + data[0].a
+  try{
+    const { data } = await axios.get("https://zenquotes.io/api/random");
+    const sections = [
+      {
+        "type": "tile",
+        "body": [
+          {
+            "type": "text",
+            "format": "markdown",
+            "text": "**Hello " + firstname + ", Here's your quote for the day**!"
+          },
+          {
+            "type": "text",
+            "format": "markdown",
+            "text": "**Quote**:" + data[0].q
+          },
+          {
+            "type": "text",
+            "format": "markdown",
+            "text": "**Author**:" + data[0].a
+          }
+        ]
+      },
+      {
+        "type": "button",
+        "text": "Get new quote",
+        "onClick": {
+          "type": "SERVERLESS_ACTION_HOOK",
+          "serverlessFunction": "crm-card"
         }
-      ]
-    },
-    {
-      "type": "button",
-      "text": "Get new quote",
-      "onClick": {
-        "type": "SERVERLESS_ACTION_HOOK",
-        "serverlessFunction": "crm-card"
       }
-    }
-  ];
-  sendResponse({
-    sections,
-  });
+    ];
+    sendResponse({
+      sections,
+    });
+  } catch (error) {
+    const sections = [
+      {
+        "type": "alert",
+        "variant": "error"
+        "title": "Error fetching new quote",
+        "body": {
+          "type": "text",
+          "text": error.message
+        }
+      }
+    ];
+    sendResponse({
+      sections,
+    });
+  }
+
 };
   

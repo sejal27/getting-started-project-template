@@ -56,7 +56,7 @@ exports.main = async (context = {}, sendResponse) => {
     sections = [
       {
         "type": "alert",
-        "variant": "danger"
+        "variant": "danger",
         "title": "",
         "body": {
           "type": "text",

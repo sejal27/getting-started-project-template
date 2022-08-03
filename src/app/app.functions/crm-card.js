@@ -57,10 +57,10 @@ exports.main = async (context = {}, sendResponse) => {
       {
         "type": "alert",
         "variant": "danger"
-        "title": "Error fetching new quote",
+        "title": "",
         "body": {
           "type": "text",
-          "text": `${error.message}`
+          "text": "Error fetching new quote"
         }
       }
     ];
